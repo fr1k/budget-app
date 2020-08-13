@@ -17,10 +17,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Comments" prop="comment">
-        <el-input v-model="formData.comment"></el-input>
+        <el-input v-model="formData.comment" @keyup.enter="onSubmit"></el-input>
       </el-form-item>
       <el-form-item label="Value" prop="value">
-        <el-input v-model.number="formData.value"></el-input>
+        <el-input
+          v-model.number="formData.value"
+          @keyup.enter="onSubmit"
+        ></el-input>
       </el-form-item>
       <el-button type="primary" @click="onSubmit">Submin</el-button>
     </el-form>
@@ -63,6 +66,13 @@ export default {
     onSubmit() {
       this.$refs.addItemForm.validate((valid) => {
         if (valid) {
+          if (this.formData.type === 'OUTCOME') {
+            this.formData.value = Math.abs(this.formData.value);
+            this.formData.value = -this.formData.value;
+          }
+          if (this.formData.type === 'INCOME') {
+            this.formData.value = Math.abs(this.formData.value);
+          }
           this.$emit('submitForm', { ...this.formData });
           this.$refs.addItemForm.resetFields();
         }

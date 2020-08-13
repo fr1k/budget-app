@@ -48,14 +48,13 @@ export default {
       this.$delete(this.list, id);
     },
     onSubmitForm(data) {
-      console.log(Object.keys(this.list).length);
       const newObj = {
         ...data,
-        id: Object.keys(this.list).length + 1,
+        id: String(Math.random()),
       };
 
       this.$set(this.list, newObj.id, newObj);
-      console.log(this.list);
+      // console.log(this.list);
     },
   },
 };

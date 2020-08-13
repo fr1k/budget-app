@@ -9,9 +9,16 @@
             type="danger"
             icon="el-icon-delete"
             circle
-            @click="deleteitem(item.id)"
+            @click="confirmDialog(item.id)"
           >
           </el-button>
+          <el-dialog title="Warning" :visible.sync="dialogVisible" width="30%">
+            <span>Do you really want to delete it</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">No</el-button>
+              <el-button type="primary" @click="deleteitem">Yes</el-button>
+            </span>
+          </el-dialog>
         </div>
       </template>
       <el-alert v-else type="error" show-icon :title="emptyTitle"></el-alert>
@@ -32,6 +39,8 @@ export default {
     return {
       header: 'Budget List',
       emptyTitle: 'Empty List',
+      dialogVisible: false,
+      listId: '',
     };
   },
   computed: {
@@ -41,8 +50,14 @@ export default {
     },
   },
   methods: {
-    deleteitem(id) {
-      this.$emit('deleteitem', id);
+    confirmDialog(id) {
+      this.listId = id;
+      this.dialogVisible = true;
+    },
+    deleteitem() {
+      this.$emit('deleteitem', this.listId);
+      this.listId = '';
+      this.dialogVisible = false;
     },
   },
 };
