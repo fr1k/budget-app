@@ -3,8 +3,11 @@
     <el-card :header="header">
       <template v-if="isEmpty">
         <div class="list-item" v-for="(item, prop) in list" :key="prop">
+          <i :class="iconClass(item)"></i>
           <span class="budget-comment">{{ item.comment }}</span>
-          <span class="budget-value">{{ item.value }}</span>
+          <span class="budget-value" :class="colorValue(item)">{{
+            item.value
+          }}</span>
           <el-button
             type="danger"
             icon="el-icon-delete"
@@ -56,8 +59,19 @@ export default {
     },
     deleteitem() {
       this.$emit('deleteitem', this.listId);
-      this.listId = '';
       this.dialogVisible = false;
+    },
+    iconClass(item) {
+      return {
+        'el-icon-top': item.icon,
+        'el-icon-bottom': !item.icon,
+      };
+    },
+    colorValue(item) {
+      return {
+        green: item.icon,
+        red: !item.icon,
+      };
     },
   },
 };
@@ -77,5 +91,11 @@ export default {
   font-weight: bold;
   margin-left: auto;
   margin-right: 20px;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
 }
 </style>

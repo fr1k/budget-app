@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       formData: {
+        icon: true,
         type: 'INCOME',
         comment: '',
         value: 0,
@@ -67,10 +68,12 @@ export default {
       this.$refs.addItemForm.validate((valid) => {
         if (valid) {
           if (this.formData.type === 'OUTCOME') {
+            this.formData.icon = false;
             this.formData.value = Math.abs(this.formData.value);
             this.formData.value = -this.formData.value;
           }
           if (this.formData.type === 'INCOME') {
+            this.formData.icon = true;
             this.formData.value = Math.abs(this.formData.value);
           }
           this.$emit('submitForm', { ...this.formData });

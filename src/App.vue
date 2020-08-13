@@ -21,12 +21,14 @@ export default {
     return {
       list: {
         1: {
+          icon: true,
           type: 'INCOME',
           value: 100,
           comment: 'Some comment',
           id: 1,
         },
         2: {
+          icon: false,
           type: 'OUTCOME',
           value: -50,
           comment: 'Some outcome comment',
