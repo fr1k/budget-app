@@ -34,6 +34,20 @@ export default {
           comment: 'Some outcome comment',
           id: 2,
         },
+        3: {
+          icon: true,
+          type: 'INCOME',
+          value: 150,
+          comment: 'Some outcome comment',
+          id: 3,
+        },
+        4: {
+          icon: false,
+          type: 'OUTCOME',
+          value: 50,
+          comment: 'Some outcome comment',
+          id: 4,
+        },
       },
     };
   },

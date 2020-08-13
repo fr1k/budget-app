@@ -1,8 +1,31 @@
 <template>
   <div class="budget-list-wrap">
-    <el-card :header="header">
+    <el-card>
+      <div class="card-header" slot="header">
+        <span>{{ header }}</span>
+        <el-button-group>
+          <el-button
+            type="success"
+            icon="el-icon-top"
+            size="mini"
+            @click="showList = more"
+          ></el-button>
+          <el-button
+            type="danger"
+            icon="el-icon-bottom"
+            size="mini"
+            @click="showList = less"
+          ></el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-tickets"
+            size="mini"
+            @click="showList = all"
+          ></el-button>
+        </el-button-group>
+      </div>
       <template v-if="isEmpty">
-        <div class="list-item" v-for="(item, prop) in list" :key="prop">
+        <div class="list-item" v-for="(item, index) in list" :key="index">
           <i :class="iconClass(item)"></i>
           <span class="budget-comment">{{ item.comment }}</span>
           <span class="budget-value" :class="colorValue(item)">{{
@@ -44,12 +67,16 @@ export default {
       emptyTitle: 'Empty List',
       dialogVisible: false,
       listId: '',
+      showList: 'all',
     };
   },
   computed: {
     isEmpty() {
       // console.log(Boolean(Object.keys(this.list).length));
       return Boolean(Object.keys(this.list).length);
+    },
+    onShowList() {
+      return {};
     },
   },
   methods: {
@@ -91,6 +118,11 @@ export default {
   font-weight: bold;
   margin-left: auto;
   margin-right: 20px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .red {
   color: red;
