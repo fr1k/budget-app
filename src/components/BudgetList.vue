@@ -8,24 +8,28 @@
             type="success"
             icon="el-icon-top"
             size="mini"
-            @click="showList = more"
+            @click="onMoreList"
           ></el-button>
           <el-button
             type="danger"
             icon="el-icon-bottom"
             size="mini"
-            @click="showList = less"
+            @click="onLessList"
           ></el-button>
           <el-button
             type="primary"
             icon="el-icon-tickets"
             size="mini"
-            @click="showList = all"
+            @click="onAllList"
           ></el-button>
         </el-button-group>
       </div>
       <template v-if="isEmpty">
-        <div class="list-item" v-for="(item, index) in list" :key="index">
+        <div
+          class="list-item"
+          v-for="(item, index) in isFilterList"
+          :key="index"
+        >
           <i :class="iconClass(item)"></i>
           <span class="budget-comment">{{ item.comment }}</span>
           <span class="budget-value" :class="colorValue(item)">{{
@@ -67,7 +71,7 @@ export default {
       emptyTitle: 'Empty List',
       dialogVisible: false,
       listId: '',
-      showList: 'all',
+      isFilterList: JSON.parse(JSON.stringify(this.list)),
     };
   },
   computed: {
@@ -75,9 +79,9 @@ export default {
       // console.log(Boolean(Object.keys(this.list).length));
       return Boolean(Object.keys(this.list).length);
     },
-    onShowList() {
-      return {};
-    },
+    // onShowList() {
+    //   return Object.values(this.list).filter((elem) => elem.icon === true);
+    // },
   },
   methods: {
     confirmDialog(id) {
@@ -90,15 +94,28 @@ export default {
     },
     iconClass(item) {
       return {
-        'el-icon-top': item.icon,
-        'el-icon-bottom': !item.icon,
+        'el-icon-top': item.type === 'INCOME',
+        'el-icon-bottom': item.type === 'OUTCOME',
       };
     },
     colorValue(item) {
       return {
-        green: item.icon,
-        red: !item.icon,
+        green: item.type === 'INCOME',
+        red: item.type === 'OUTCOME',
       };
+    },
+    onMoreList() {
+      this.isFilterList = Object.values(this.list).filter(
+        (item) => item.type === 'INCOME'
+      );
+    },
+    onLessList() {
+      this.isFilterList = Object.values(this.list).filter(
+        (item) => item.type === 'OUTCOME'
+      );
+    },
+    onAllList() {
+      this.isFilterList = JSON.parse(JSON.stringify(this.list));
     },
   },
 };
