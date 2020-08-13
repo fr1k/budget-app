@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <BudgetList :list="list" />
+    <TotalBalance :total="totalBalance" />
+    <BudgetList :list="list" @deleteitem="onDeleteitem" />
   </div>
 </template>
 
 <script>
 import BudgetList from '@/components/BudgetList.vue';
+import TotalBalance from '@/components/TotalBalance.vue';
 export default {
   name: 'App',
   components: {
     BudgetList,
+    TotalBalance,
   },
   data() {
     return {
@@ -28,6 +31,19 @@ export default {
         },
       },
     };
+  },
+  computed: {
+    totalBalance() {
+      return Object.values(this.list).reduce(
+        (acc, item) => acc + item.value,
+        0
+      );
+    },
+  },
+  methods: {
+    onDeleteitem(id) {
+      this.$delete(this.list, id);
+    },
   },
 };
 </script>
