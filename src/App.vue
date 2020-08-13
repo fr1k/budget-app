@@ -1,26 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <BudgetList :list="list" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import BudgetList from '@/components/BudgetList.vue';
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    BudgetList,
+  },
+  data() {
+    return {
+      list: {
+        1: {
+          type: 'INCOME',
+          value: 100,
+          comment: 'Some comment',
+          id: 1,
+        },
+        2: {
+          type: 'OUTCOME',
+          value: -50,
+          comment: 'Some outcome comment',
+          id: 2,
+        },
+      },
+    };
+  },
+};
 </script>
 
 <style>
+@import '../node_modules/typeface-roboto/index.css';
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
