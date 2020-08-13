@@ -18,7 +18,7 @@ export default {
 .total-value {
   font-size: 20px;
   text-transform: uppercase;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
 }
 </style>

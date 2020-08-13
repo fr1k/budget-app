@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Form @submitForm="onSubmitForm" />
     <TotalBalance :total="totalBalance" />
     <BudgetList :list="list" @deleteitem="onDeleteitem" />
   </div>
@@ -8,11 +9,13 @@
 <script>
 import BudgetList from '@/components/BudgetList.vue';
 import TotalBalance from '@/components/TotalBalance.vue';
+import Form from '@/components/Form.vue';
 export default {
   name: 'App',
   components: {
     BudgetList,
     TotalBalance,
+    Form,
   },
   data() {
     return {
@@ -44,6 +47,16 @@ export default {
     onDeleteitem(id) {
       this.$delete(this.list, id);
     },
+    onSubmitForm(data) {
+      console.log(Object.keys(this.list).length);
+      const newObj = {
+        ...data,
+        id: Object.keys(this.list).length + 1,
+      };
+
+      this.$set(this.list, newObj.id, newObj);
+      console.log(this.list);
+    },
   },
 };
 </script>
@@ -52,8 +65,8 @@ export default {
 @import '../node_modules/typeface-roboto/index.css';
 #app {
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 </style>
