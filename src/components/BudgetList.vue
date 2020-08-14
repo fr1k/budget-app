@@ -8,28 +8,24 @@
             type="success"
             icon="el-icon-top"
             size="mini"
-            @click="onMoreList"
+            @click="isSortList = 'INCOME'"
           ></el-button>
           <el-button
             type="danger"
             icon="el-icon-bottom"
             size="mini"
-            @click="onLessList"
+            @click="isSortList = 'OUTCOME'"
           ></el-button>
           <el-button
             type="primary"
             icon="el-icon-tickets"
             size="mini"
-            @click="onAllList"
+            @click="isSortList = 'ALL'"
           ></el-button>
         </el-button-group>
       </div>
       <template v-if="isEmpty">
-        <div
-          class="list-item"
-          v-for="(item, index) in isFilterList"
-          :key="index"
-        >
+        <div class="list-item" v-for="(item, index) in onSortList" :key="index">
           <i :class="iconClass(item)"></i>
           <span class="budget-comment">{{ item.comment }}</span>
           <span class="budget-value" :class="colorValue(item)">{{
@@ -71,17 +67,23 @@ export default {
       emptyTitle: 'Empty List',
       dialogVisible: false,
       listId: '',
-      isFilterList: JSON.parse(JSON.stringify(this.list)),
+      isSortList: 'ALL',
+      // isFilterList: {},
     };
   },
+  mounted() {},
   computed: {
     isEmpty() {
-      // console.log(Boolean(Object.keys(this.list).length));
       return Boolean(Object.keys(this.list).length);
     },
-    // onShowList() {
-    //   return Object.values(this.list).filter((elem) => elem.icon === true);
-    // },
+
+    onSortList() {
+      if (this.isSortList === 'ALL') return this.list;
+
+      return Object.values(this.list).filter((item) => {
+        return item.type === this.isSortList;
+      });
+    },
   },
   methods: {
     confirmDialog(id) {
@@ -103,19 +105,6 @@ export default {
         green: item.type === 'INCOME',
         red: item.type === 'OUTCOME',
       };
-    },
-    onMoreList() {
-      this.isFilterList = Object.values(this.list).filter(
-        (item) => item.type === 'INCOME'
-      );
-    },
-    onLessList() {
-      this.isFilterList = Object.values(this.list).filter(
-        (item) => item.type === 'OUTCOME'
-      );
-    },
-    onAllList() {
-      this.isFilterList = JSON.parse(JSON.stringify(this.list));
     },
   },
 };

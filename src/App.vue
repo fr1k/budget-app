@@ -35,7 +35,7 @@ export default {
         3: {
           type: 'INCOME',
           value: 150,
-          comment: 'Some outcome comment',
+          comment: 'Some income comment',
           id: 3,
         },
         4: {

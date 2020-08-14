@@ -1,13 +1,16 @@
 <template>
   <el-card class="form-card">
     <el-form
+      size="small"
       :model="formData"
       ref="addItemForm"
       :rules="rules"
-      label-position="top"
+      label-position="right"
+      label-width="100px"
     >
       <el-form-item label="Type" prop="type">
         <el-select
+          size="small"
           class="type-select"
           v-model="formData.type"
           placeholder="Choose type..."
@@ -17,15 +20,12 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Comments" prop="comment">
-        <el-input v-model="formData.comment" @keyup.enter="onSubmit"></el-input>
+        <el-input size="small" v-model="formData.comment"></el-input>
       </el-form-item>
       <el-form-item label="Value" prop="value">
-        <el-input
-          v-model.number="formData.value"
-          @keyup.enter="onSubmit"
-        ></el-input>
+        <el-input size="small" v-model="formData.value"></el-input>
       </el-form-item>
-      <el-button type="primary" @click="onSubmit">Submin</el-button>
+      <el-button type="primary" @click="onSubmit">Submit</el-button>
     </el-form>
   </el-card>
 </template>
@@ -39,6 +39,11 @@ export default {
         type: 'INCOME',
         comment: '',
         value: 0,
+      },
+      testRules: {
+        testText: [
+          { required: true, message: 'Please select type', trigger: 'blur' },
+        ],
       },
       rules: {
         type: [
@@ -54,9 +59,8 @@ export default {
         value: [
           { required: true, message: 'Please input value', trigger: 'change' },
           {
-            type: 'number',
-            message: 'Value must be number',
-            trigger: 'change',
+            pattern: /[1-9]\d*/,
+            message: 'Value must be more then 0',
           },
         ],
       },
@@ -88,7 +92,7 @@ export default {
   margin: auto;
   margin-top: 5px;
 }
-.type-select {
+/* .type-select {
   width: 100%;
-}
+} */
 </style>
